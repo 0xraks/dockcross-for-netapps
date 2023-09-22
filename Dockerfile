@@ -1,17 +1,12 @@
 # Base image
 FROM ubuntu:20.04
 
-LABEL maintainer="Rakshith rakshith152@gmail.com"
-LABEL version="0.0.23"
-LABEL description="Buildsystem for ARM32 and ARM64 network applications"
+LABEL maintainer="Rakshith Prakash rakshith152@gmail.com"
+LABEL version="0.01"
+LABEL description="Buildsystem for arm32-bit and arm64-bit libnl apps"
 
 ENV TZ=Europe/Kiev
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
-# Set the PUID, PGID, and umask (replace with your values)
-# ENV PUID=1000
-# ENV PGID=1000
-# ENV UMASK=0022
 
 # Install cross compilation toolchains
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
@@ -24,16 +19,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y \
     libnl-genl-3-dev \
     libssl-dev git bc libc6-dev \
     libncurses5-dev build-essential libmnl-dev\
-    pkg-config wget flex bison nano vim \
-    libnl-route-3-dev libdbus-1-dev libsystemd-dev
+    pkg-config wget flex bison tree nano vim
     # libc-dev-arm64-cross unzip  expat nano vim
 
 # Build and install libnl from source for arm 32 bit system (armv4)
 WORKDIR /
 RUN wget https://github.com/thom311/libnl/releases/download/libnl3_5_0/libnl-3.5.0.tar.gz
 RUN tar -xvf libnl-3.5.0.tar.gz
-# RUN wget https://www.infradead.org/~tgr/libnl/files/libnl-3.2.25.tar.gz
-# RUN tar -xvf libnl-3.2.25.tar.gz
 WORKDIR /libnl-3.5.0
 RUN ./configure --host=arm-linux-gnueabihf --prefix=/usr/arm-linux-gnueabihf/
 RUN make -j$(nproc --ignore=1)
@@ -117,21 +109,21 @@ RUN ./configure --host=aarch64-linux-gnu --prefix=/usr/aarch64-linux-gnu/
 RUN make -j$(nproc --ignore=1)
 RUN make install -j$(nproc --ignore=1)
 
+# Build and install OpenSSL from source for arm64 bit
+
 # Set working directory to /app
 WORKDIR /app
 
 # Mount a source code directory into the container
 VOLUME /app
-
 RUN echo "alias activate_arm64='export PKG_CONFIG_PATH=/usr/aarch64-linux-gnu/lib/pkgconfig/ && export LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib/'" >> ~/.bashrc
 RUN echo "alias activate_arm32='export PKG_CONFIG_PATH=/usr/arm-linux-gnueabihf/lib/pkgconfig/ && export LD_LIBRARY_PATH=/usr/arm-linux-gnueabihf/lib/'" >> ~/.bashrc
 # Default command
 COPY build_hostap.sh /
+COPY build_wl.sh /
 CMD ["/bin/bash"]
 
 # make -j8 CC=aarch64-linux-gnu-gcc LDFLAGS+=-static LIBS+="-lssl -lcrypto  -lnl-genl-3 -lnl-3 -lpthread -ldl"
 # CONFIG_DRIVER_NL80211=y
 # CFLAGS += -I/usr/include/libnl3
 # CONFIG_LIBNL32=y
-
-

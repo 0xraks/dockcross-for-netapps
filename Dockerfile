@@ -1,7 +1,7 @@
 # Base image
 FROM ubuntu:20.04
 
-LABEL maintainer="Rakshith Prakash rakshith152@gmail.com"
+LABEL maintainer="Rakshith rakshith152@gmail.com"
 LABEL version="0.01"
 LABEL description="Buildsystem for arm32-bit and arm64-bit libnl apps"
 

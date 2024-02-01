@@ -119,8 +119,8 @@ VOLUME /app
 RUN echo "alias activate_arm64='export PKG_CONFIG_PATH=/usr/aarch64-linux-gnu/lib/pkgconfig/ && export LD_LIBRARY_PATH=/usr/aarch64-linux-gnu/lib/'" >> ~/.bashrc
 RUN echo "alias activate_arm32='export PKG_CONFIG_PATH=/usr/arm-linux-gnueabihf/lib/pkgconfig/ && export LD_LIBRARY_PATH=/usr/arm-linux-gnueabihf/lib/'" >> ~/.bashrc
 # Default command
-COPY build_hostap.sh /
-COPY build_wl.sh /
+COPY build_hostap.sh /bin
+COPY build_wl.sh /bin
 CMD ["/bin/bash"]
 
 # make -j8 CC=aarch64-linux-gnu-gcc LDFLAGS+=-static LIBS+="-lssl -lcrypto  -lnl-genl-3 -lnl-3 -lpthread -ldl"

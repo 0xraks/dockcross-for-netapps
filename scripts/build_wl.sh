@@ -1,7 +1,10 @@
 #!/bin/bash
-#======================== X86============================
+
 mkdir -p -v /app/wl_bin/fmac /app/wl_bin/dhd
 cd /app/WL_TOOL/src/
+sed -i 's/\$(CC) \$(LDFLAGS) \$(LIBS) -o \$@ \$^/$(strip \$(CC) -o \$@ \$^ \$(LDFLAGS) \$(LIBS))/g' linux_external.mk
+
+#======================== X86============================
 make clean -f linux_external.mk -j$(nproc --ignore=1)
 rm -rf wl_tool*
 make -f linux_external.mk -j$(nproc --ignore=1) LDFLAGS+="-Wl,--no-as-needed"

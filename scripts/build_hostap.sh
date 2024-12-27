@@ -54,7 +54,7 @@ make clean
 cp defconfig_base .config
 sed -i 's/CONFIG_DRIVER_NL80211=.*/CONFIG_DRIVER_NL80211=y/' .config
 sed -i 's/CONFIG_LIBNL32=.*/CONFIG_LIBNL32=y/' .config
-make CC=aarch64-linux-gnu-gcc  LDFLAGS+=-static LIBS+="-lssl -lcrypto  -lnl-genl-3 -lnl-3 -lpthread -ldl"  -j$(nproc --ignore=1)
+make CC=aarch64-linux-gnu-gcc  LDFLAGS+=-static LIBS+="-lm -lssl -lcrypto  -lnl-genl-3 -lnl-3 -lpthread -ldl"  -j$(nproc --ignore=1)
 cp hostapd /app/bin/arm64/static
 cp hostapd_cli /app/bin/arm64/static
 
@@ -80,7 +80,7 @@ make clean
 cp defconfig_base .config
 sed -i 's/CONFIG_DRIVER_NL80211=.*/CONFIG_DRIVER_NL80211=y/' .config
 sed -i 's/CONFIG_LIBNL32=.*/CONFIG_LIBNL32=y/' .config
-make CC=aarch64-linux-gnu-gcc LDFLAGS+="-static -Wno-as-needed" LIBS="-lpthread -lnl-3 -pthread -lnl-genl-3 -lnl-route-3 -ldbus-1 -lssl -lcrypto -ldl" -j$(nproc --ignore=1)
+make CC=aarch64-linux-gnu-gcc LDFLAGS+="-static -Wno-as-needed" LIBS="-lm -lpthread -lnl-3 -pthread -lnl-genl-3 -lnl-route-3 -ldbus-1 -lssl -lcrypto -ldl" -j$(nproc --ignore=1)
 cp wpa_supplicant /app/bin/arm64/static
 cp wpa_cli /app/bin/arm64/static
 cp wpa_passphrase /app/bin/arm64/static
@@ -95,7 +95,7 @@ make clean
 cp defconfig_base .config
 sed -i 's/CONFIG_DRIVER_NL80211=.*/CONFIG_DRIVER_NL80211=y/' .config
 sed -i 's/CONFIG_LIBNL32=.*/CONFIG_LIBNL32=y/' .config
-make CC=arm-linux-gnueabihf-gcc  LDFLAGS+=-static LIBS+="-lssl -lcrypto  -lnl-genl-3 -lnl-3 -lpthread -ldl"  -j$(nproc --ignore=1)
+make CC=arm-linux-gnueabihf-gcc  LDFLAGS+=-static LIBS+="-lm -lssl -lcrypto  -lnl-genl-3 -lnl-3 -lpthread -ldl"  -j$(nproc --ignore=1)
 cp hostapd /app/bin/arm32/static
 cp hostapd_cli /app/bin/arm32/static
 
@@ -123,7 +123,7 @@ make clean
 cp defconfig_base .config
 sed -i 's/CONFIG_DRIVER_NL80211=.*/CONFIG_DRIVER_NL80211=y/' .config
 sed -i 's/CONFIG_LIBNL32=.*/CONFIG_LIBNL32=y/' .config
-make CC=arm-linux-gnueabihf-gcc LDFLAGS+="-static -Wno-as-needed" LIBS="-lpthread -lnl-3 -pthread -lnl-genl-3 -lnl-route-3 -ldbus-1 -lssl -lcrypto -ldl" -j$(nproc --ignore=1)
+make CC=arm-linux-gnueabihf-gcc LDFLAGS+="-static -Wno-as-needed" LIBS="-lm -lpthread -lnl-3 -pthread -lnl-genl-3 -lnl-route-3 -ldbus-1 -lssl -lcrypto -ldl" -j$(nproc --ignore=1)
 cp wpa_supplicant /app/bin/arm32/static
 cp wpa_cli /app/bin/arm32/static
 cp wpa_passphrase /app/bin/arm32/static
